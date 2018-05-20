@@ -48,78 +48,96 @@ document.addEventListener("DOMContentLoaded", function() {
    const cssPath = 'https://cdn.rawgit.com/widget-/slack-black-theme/master/custom.css';
    let cssPromise = fetch(cssPath).then(response => response.text());
 
-   let customCustomCSS = `
-   :root {
-      /* Modify these to change your theme colors: */
-      --primary: #61AFEF;
-      --text: #ABB2BF;
-      --background: #282C34;
-      --background-elevated: #3B4048;
-   }
-   div.c-message.c-message--light.c-message--hover
-   {
-   color: #fff !important;
-    background-color: #3B4048 !important;
-   }
+  let customCustomCSS = `
+  :root {
+    /* Modify these to change your theme colors: */
+    --primary: #61AFEF;
+    --text: #ABB2BF;
+    --background: #23272f;
+    --background-elevated: #2d3139;
+  }
 
-   div.c-virtual_list__scroll_container {
+  div.c-message.c-message--light.c-message--hover {
+    color: #fff !important;
     background-color: #282C34 !important;
-   }
-   .p-message_pane .c-message_list:not(.c-virtual_list--scrollbar), .p-message_pane .c-message_list.c-virtual_list--scrollbar > .c-scrollbar__hider {
+  }
+
+  /* channel background */
+  div.c-virtual_list__scroll_container {
+    background-color: #23272f !important;
+  }
+
+  /* channel details panel */
+  #channel_page_scroller {
+    background-color: #282C34 !important;
+  }
+
+  div.c-message_attachment.c-message_attachment {
+    color: #7c7b7b !important;
+  }
+
+  span.c-message_attachment__pretext {
+    color: #7c7b7b !important;
+  }
+
+  /* message text */
+  span.c-message__body,
+  a.c-message__sender_link,
+  span.c-message_attachment__media_trigger.c-message_attachment__media_trigger--caption,
+  div.p-message_pane__foreword__description span {
+    color: #d3cdc1 !important;
+  }
+
+  .p-message_pane .c-message_list:not(.c-virtual_list--scrollbar), .p-message_pane .c-message_list.c-virtual_list--scrollbar > .c-scrollbar__hider {
     z-index: 0;
-   }
+  }
 
-   div.comment.special_formatting_quote.content,.comment_body{
-    color: #ABB2BF !important;
-   }
+  pre.special_formatting {
+    background-color: #222 !important;
+    color: #8f8f8f !important;
+    border: solid;
+    border-width: 1 px !important;
+  }
+  
+  /* @username mentions */
+  a.c-member_slug.c-member_slug--link, button.c-mrkdwn__subteam {
+    color: #61AFEF !important; 
+    background-color: #212b2f !important;
+  }
 
-   div.c-message:hover {
-    background-color: #3B4048 !important;
-   }
+  /* @subteam mentions */
+  button.c-mrkdwn__subteam {
 
-   div.c-message_attachment.c-message_attachment{
-    color: #7c7b7b !important;
-   }
+    background-color: #212b2f !important;
+  }
 
-   span.c-message_attachment__pretext{
-    color: #7c7b7b !important;
-   }
+  /* member name display */
+  span.c-unified_member__display-name {
+    color: #ABB2BF !important
+  }
 
-   hr.c-message_list__day_divider__line{
+  /* day divider */
+  hr.c-message_list__day_divider {
     background: #abb2bf !important;
-   }
+  }
 
-   div.c-message_list__day_divider__label__pill{
+  /* day divider pill */
+  div.c-message_list__day_divider__label__pill{
     background: #abb2bf !important;
-   }   
+  }   
 
-   span.c-message__body,
-   a.c-message__sender_link,
-   span.c-message_attachment__media_trigger.c-message_attachment__media_trigger--caption,
-   div.p-message_pane__foreword__description span
-   {
-       color: #afafaf !important;
-   }
-
-   pre.special_formatting{
-     background-color: #222 !important;
-     color: #8f8f8f !important;
-     border: solid;
-     border-width: 1 px !important;
-    
-   }
-
-   // NOT WORKING
-   // div.ql-editor.c-message__editor__input {
-   //  background: #2c2d30 !important;
-   // }
-   //
-   // div.c-message--light .c-message--highlight .c-message--editing .c-message--highlight_yellow_bg{
-   //  background: #3B4048 !important;
-   //  border: none !important;
-   // }
-
-    `
+  button.c-reaction { 
+    background-color: #222326;
+    border-top-color: #41403f;
+    border-right-color: #41403f;
+    border-bottom-color: #41403f;
+    border-left-color: #41403f;
+  }
+  span.emoji {
+    text-shadow: none !important;
+    color: transparent !important;
+  }
+   `
 
    // Insert a style tag into the wrapper view
    cssPromise.then(css => {
