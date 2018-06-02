@@ -41,18 +41,18 @@ At the very bottom, add
 // First make sure the wrapper app is loaded
 document.addEventListener("DOMContentLoaded", function() {
 
-   // Then get its webviews
-   let webviews = document.querySelectorAll(".TeamView webview");
+  // Then get its webviews
+  let webviews = document.querySelectorAll(".TeamView webview");
 
-   // Fetch our CSS in parallel ahead of time
-   const cssPath = 'https://cdn.rawgit.com/widget-/slack-black-theme/master/custom.css';
-   let cssPromise = fetch(cssPath).then(response => response.text());
+  // Fetch our CSS in parallel ahead of time
+  const cssPath = 'https://cdn.rawgit.com/widget-/slack-black-theme/master/custom.css';
+  let cssPromise = fetch(cssPath).then(response => response.text());
 
   let customCustomCSS = `
   :root {
     /* Modify these to change your theme colors: */
     --primary: #61AFEF;
-    --text: #ABB2BF;
+    --text: #d3cdc1;
     --background: #23272f;
     --background-elevated: #2d3139;
   }
@@ -121,10 +121,22 @@ document.addEventListener("DOMContentLoaded", function() {
     background: #abb2bf !important;
   }
 
+  .c-message_list__day_divider__line {
+    border-top: 1px solid #505050 !important
+  }
+
   /* day divider pill */
   div.c-message_list__day_divider__label__pill{
     background: #abb2bf !important;
   }   
+
+  .channel_page_section, #channel_page_scroller {
+    --background-elevated: #23272f !important;
+  }
+
+  #details_tab .channel_page_section {
+    border-top: 1px solid #505050 !important;
+  }
 
   button.c-reaction { 
     background-color: #222326;
@@ -136,34 +148,48 @@ document.addEventListener("DOMContentLoaded", function() {
   span.emoji {
     text-shadow: none !important;
     color: transparent !important;
+    -webkit-filter: drop-shadow( 1px  0 0 var(--background-dark))
+                    drop-shadow(-1px  0 0 var(--background-dark))
+                    drop-shadow(-0  1px 0 var(--background-dark))
+                    drop-shadow( 0 -1px 0 var(--background-bright)) !important
+  }
+  .emoji-sizer{
+    -webkit-filter: drop-shadow( 1px  0 0 var(--background-dark))
+    drop-shadow(-1px  0 0 var(--background-dark))
+    drop-shadow(-0  1px 0 var(--background-dark))
+    drop-shadow( 0 -1px 0 var(--background-bright)) !important
+  }
+
+  .tab_complete_ui, .tab_complete_ui_header {
+    background-color: #2d3139 !important
   }
    `
 
-   // Insert a style tag into the wrapper view
-   cssPromise.then(css => {
-      let s = document.createElement('style');
-      s.type = 'text/css';
-      s.innerHTML = css + customCustomCSS;
-      document.head.appendChild(s);
-   });
+  // Insert a style tag into the wrapper view
+  cssPromise.then(css => {
+     let s = document.createElement('style');
+     s.type = 'text/css';
+     s.innerHTML = css + customCustomCSS;
+     document.head.appendChild(s);
+  });
 
-   // Wait for each webview to load
-   webviews.forEach(webview => {
-      webview.addEventListener('ipc-message', message => {
-         if (message.channel == 'didFinishLoading')
-            // Finally add the CSS into the webview
-            cssPromise.then(css => {
-               let script = `
-                     let s = document.createElement('style');
-                     s.type = 'text/css';
-                     s.id = 'slack-custom-css';
-                     s.innerHTML = \`${css + customCustomCSS}\`;
-                     document.head.appendChild(s);
-                     `
-               webview.executeJavaScript(script);
-            })
-      });
-   });
+  // Wait for each webview to load
+  webviews.forEach(webview => {
+     webview.addEventListener('ipc-message', message => {
+        if (message.channel == 'didFinishLoading')
+           // Finally add the CSS into the webview
+           cssPromise.then(css => {
+              let script = `
+                    let s = document.createElement('style');
+                    s.type = 'text/css';
+                    s.id = 'slack-custom-css';
+                    s.innerHTML = \`${css + customCustomCSS}\`;
+                    document.head.appendChild(s);
+                    `
+              webview.executeJavaScript(script);
+           })
+     });
+  });
 });
 ```
 
