@@ -55,6 +55,29 @@ document.addEventListener("DOMContentLoaded", function() {
     --text: #d3cdc1;
     --background: #23272f;
     --background-elevated: #2d3139;
+    --border-bright: #23272f;
+    --border-dim: #2d3139;
+    --scrollbar-border: #23272f;
+  }
+
+  .p-channel_sidebar__channel--selected, .p-channel_sidebar__link--selected, .p-channel_sidebar__channel--selected:link, .p-channel_sidebar__link--selected:link, .p-channel_sidebar__channel--selected:visited, .p-channel_sidebar__link--selected:visited, .p-channel_sidebar__channel--selected:hover, .p-channel_sidebar__link--selected:hover, .p-channel_sidebar__channel--selected + .p-channel_sidebar__close {
+    background: #204461 !important;
+  }
+
+  .p-channel_sidebar__channel, .p-channel_sidebar__link {
+    border-radius: 0 !important;
+  }
+
+  .c-mrkdwn__code {
+    color: #d72b3f !important
+  }
+
+  .flex_content_scroller {
+    background-color: #2f516d !important;
+  }
+
+  #msg_input, #primary_file_button {
+    border-color: #2d3139 !important;
   }
 
   div.c-message.c-message--light.c-message--hover {
@@ -100,7 +123,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   
   /* @username mentions */
-  a.c-member_slug.c-member_slug--link, button.c-mrkdwn__subteam {
+  a.c-member_slug.c-member_slug--link, button.c-mrkdwn__subteam, c-member_slug--mention, c-member_slug {
+    color: #61AFEF !important; 
+    background-color: #212b2f !important;
+  }
+
+  .c-member_slug--mention, .c-member_slug--mention:hover {
     color: #61AFEF !important; 
     background-color: #212b2f !important;
   }
@@ -122,20 +150,22 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   .c-message_list__day_divider__line {
-    border-top: 1px solid #505050 !important
+    border-top: 1px solid var(--border-dim) !important
   }
 
   /* day divider pill */
   div.c-message_list__day_divider__label__pill{
-    background: #abb2bf !important;
-  }   
+    background: var(--border-dim) !important;
+    color: var(--primary) !important;
+  } 
 
   .channel_page_section, #channel_page_scroller {
-    --background-elevated: #23272f !important;
+    --background-elevated: var(--background) !important;
+    background: var(--background) !important
   }
 
   #details_tab .channel_page_section {
-    border-top: 1px solid #505050 !important;
+    border-top: 1px solid var(--border-dim) !important;
   }
 
   button.c-reaction { 
